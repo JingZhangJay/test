@@ -183,19 +183,33 @@ class Home extends React.Component {
         let systemDom;
         if (this.state.systemData.length > 0) {
             systemDom = this.state.systemData.map(el => {
+                if(el.systemId == 8){
                     return (
                         <Col span="4">
                             <Card bordered={true} style={{ backgroundColor: 'transparent', borderColor: "#4cb8e9" }}>
-                                <p>
+                                <p className='system-icon' onClick={this.handleNextRouter.bind(this, "/about/pfpsmas/zcms/zcmsIndex", el.systemId)}>
                                     <img className="system-logo" src={el.systemId < 11 ? require(`../../../asset/sp/ua/img/portal/${el.systemId}.png`) : require(`../../../asset/sp/ua/img/portal/1.png`)} alt="" /></p>
                                 <p className='system-name'>
-                                    <Link className="system-a" to={{ pathname: "/about", state: { systemId: el.systemId, flag: true } }}>{el.systemName}
+                                    <Link className="system-a" to={{ pathname: "/about/pfpsmas/zcms/zcmsIndex", state: { systemId: el.systemId } }}>{el.systemName}
+                                    </Link>
+                                </p>
+                            </Card>
+                        </Col>
+                    )
+                }else{
+                    return (
+                        <Col span="4">
+                            <Card bordered={true} style={{ backgroundColor: 'transparent', borderColor: "#4cb8e9" }}>
+                                <p className='system-icon' onClick={this.handleNextRouter.bind(this, "/about", el.systemId)}>
+                                    <img className="system-logo" src={el.systemId < 11 ? require(`../../../asset/sp/ua/img/portal/${el.systemId}.png`) : require(`../../../asset/sp/ua/img/portal/1.png`)} alt="" /></p>
+                                <p className='system-name'>
+                                    <Link className="system-a" to={{ pathname: "/about", state: { systemId: el.systemId } }}>{el.systemName}
                                     </Link>
                                 </p>
                             </Card>
                         </Col>
                     );
-                // }  
+                }  
             })
         }
 

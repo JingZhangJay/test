@@ -1,5 +1,5 @@
 /*//媒体查询*/
-@media(min-width:1200px) and (max-width:1400px){
+@media(min-width:1200px) and (max-width:1536px){
   .main .home-container {
     width: 100%;
     height: 100%;
@@ -166,6 +166,10 @@
     text-align: center;
     background: url(../../../asset/sp/ua/img/portal/1/2.png) repeat;
     border-color: #2c6172;
+}
+
+.home-container .home-content .home-content-footer .system-icon{
+  cursor: pointer;
 }
 
 .home-container .home-content .home-content-footer .system-logo{
