@@ -1,0 +1,52 @@
+
+
+@media only screen and (min-width: 1200px) and (max-width: 1366px){
+    .previewChangeReport-container{
+        height: 500px;
+    }
+}
+
+@media only screen and (min-width: 1367px) {
+    .previewChangeReport-container{
+        height: 800px;
+    }
+}
+
+.previewChangeReport-container-top{
+    width: 80%;
+    margin: 10px auto;
+}
+
+.previewChangeReport-container-top span{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bolder;
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background: url(../../../../asset/sp/ua/img/bg.png) repeat;
+    cursor: pointer;
+}
+
+.previewChangeReport-container-bottom{
+    width: 80%;
+    margin: 15px auto;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 6px; 
+}
+
+.previewChangeReport-container-content{
+    position: relative;
+}
+
+.previewChangeReport-container-button{
+    position: absolute;
+    right: 21px;
+    top: 5px;
+    padding: 6px 15px;
+}

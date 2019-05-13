@@ -39,6 +39,20 @@ export let getAddZoningChangeRequest = async (params) => {
 }
 
 /**
+ * 建立申请单接口
+ * @param {string} requestSeq 申请单序号
+ * @param {string} note 备注
+ */
+export let getUpdateZoningChangeRequest = async (params) => {
+    let response = await axios({
+        url: 'zcmsapi1/zoningChangeManager/updateZoningChangeRequest',
+        method: 'get',
+        params: params
+    })
+    return response.data
+}
+
+/**
  * 查询存在可录入的变更申请单接口
  */
 export let getFindWritableZCCRequests = async () => {
@@ -125,6 +139,21 @@ export let getDraftsOfDetails = async (params) => {
 }
 
 /**
+ * 变更明细草稿箱通过明细id获取明细数据
+ * @param {string} id 明细id
+ */
+export let getInquiryDraftBox = async (params) => {
+    let response = await axios({
+        url: 'zcmsapi1/zoningChangeManager/inquiryDraftBox',
+        method: 'get',
+        params: {
+            id: params
+        }
+    })
+    return response.data
+}
+
+/**
  * 删除草稿箱明细
  */
 export let getRemoveDraftsOfDetails = async (params) => {
@@ -177,6 +206,21 @@ export let getLogicCheckBeforeChange = async (params) => {
 export let getZoningMergeSelectTree = async (params) => {
     let response = await axios({
         url: 'zcmsapi1/zoningChangeManager/zoningMergeSelectTree',
+        method: 'get',
+        params: params
+    })
+    return response.data
+}
+
+/**
+ * 获取迁移区划数据
+ * @param {string} rootCode    根区划     登录人区划
+ * @param {string} excludeCode  排除区划   用户选择需要变更的原区划
+ * @param {string} zoningCode  区划    用户选择迁移并入的现区划
+ */
+export let getZoningMoveSelectTreeN = async (params) => {
+    let response = await axios({
+        url: 'zcmsapi1/zoningChangeManager/zoningMoveSelectTreeN',
         method: 'get',
         params: params
     })
@@ -389,11 +433,13 @@ export let getFindVersionExist = async () => {
 
 /**
  * 查询版本记录
+ * @param {string} zoningCode 区划代码
  */
-export let getFindVersionRecord = async () => {
+export let getFindVersionRecord = async (params) => {
     let response = await axios({
         url: 'zcmsapi1/zoningChangeManager/findVersionRecord',
         method: 'get',
+        params: params,
     })
     return response.data
 }
@@ -402,6 +448,7 @@ export let getFindVersionRecord = async () => {
  * 提交版本记录
  * @param {string} dmxzqh 行政区划代码
  * @param {string} bbfbrq 版本发布日期
+ * @param {string} scbbrq 上次发布日期
  */
 export let getRecordVersion = async (params) => {
     let response = await axios({
@@ -731,3 +778,34 @@ export let getHistoryDate = async (params) => {
     })
     return response.data
 }
+
+//  rzc
+//  区划首页展示
+//  zcmsIndex
+
+/**
+ * 变更明细当月实时数据
+ * @param {string} zoningCode 区划代码
+ */
+export let getBgmxRealTimeExcel = async (params) => {
+    let response = await axios({
+        url: 'zcmsapi1/queryZoningData/bgmxRealTimeExcel',
+        method: 'get',
+        params: params
+    })
+    return response.data
+}
+
+/**
+ * 变更明细当月实时数据查询下级
+ * @param {string} zoningCode 区划代码
+ */
+export let getBgmxRealTimeExcelSub = async (params) => {
+    let response = await axios({
+        url: 'zcmsapi1/queryZoningData/bgmxRealTimeExcelSub',
+        method: 'get',
+        params: params
+    })
+    return response.data
+}
+

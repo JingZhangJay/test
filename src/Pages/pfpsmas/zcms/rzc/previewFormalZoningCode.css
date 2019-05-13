@@ -2,15 +2,35 @@
     margin-top: 20px;
 }
 
-.previewFormalZoningCode .container .container-header{
+/* .previewFormalZoningCode .container .container-header{
     margin: 20px 0;
+} */
+
+.previewFormalZoningCode .container .container-header{
+    width: 100%;
+    margin: 10px auto;
+}
+
+.previewFormalZoningCode .container .container-header span{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bolder;
+    padding: 5px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    background: url(../../../../asset/sp/ua/img/bg.png) repeat;
+    cursor: pointer;
 }
 
 .previewFormalZoningCode .container .container-top :global(.ant-row-flex){
     height: 180px;
 }
 
-.previewFormalZoningCode .container .container-top :global(.ant-row-flex .ant-col-3){
+.previewFormalZoningCode .container .container-top :global(.ant-row-flex .ant-col-4){
     background: url("../../../../asset/sp/ua/img/portal/1/2.png") repeat;
     height: inherit;
     overflow: auto;
@@ -30,6 +50,12 @@
     background: #3ea7d4;
 }
 .previewFormalZoningCode .container .container-top .zoningcode-tr td{
+    text-align: left;
+}
+
+.previewFormalZoningCode .container .container-footer{
+    margin-top: 20px;
+    font-size: 14px;
     text-align: left;
 }
 

@@ -148,7 +148,6 @@ class HistoricalTrace extends React.Component {
                 type: 'graph',
                 layout: 'none',
                 symbol: `image://${circle}`,
-                // symbol: 'circle',
                 symbolSize: 50,
                 focusNodeAdjacency: true,
                 yAxis: {
@@ -302,47 +301,55 @@ class HistoricalTrace extends React.Component {
 
         return (
             <div className="outer-box">
-                <div className="historicalTrace">
-                    {/* <FreeScrollBar autohide="true"> */}
-                        <div className="historicalTrace-container">
-                            <div className="historicalTrace-container-top">
-                                <Row>
-                                    <Col span={4}>
-                                        <Row>
-                                            <Col span={8}><span className="info-span">区划代码</span></Col>
-                                            <Col span={16}>
-                                                <Input size="large" value={this.state.queryZoningCode}
-                                                    onChange={this.handleChangeValue.bind(this)}></Input>
-                                            </Col>
-                                        </Row>
-                                    </Col>
+                <div className="historicalTrace inner-box">
+                    <FreeScrollBar autohide="true">
+                        <div className="historicalTrace-container container">
+                            <div className="historicalTrace-container-top container-box margin-top-10">
+                                <div className="container-centent">
+                                    <Row>
+                                        <Col span={5}>
+                                            <Row>
+                                                <Col span={8}><span className="info-span">区划代码</span></Col>
+                                                <Col span={16}>
+                                                    <Input size="large" value={this.state.queryZoningCode}
+                                                        onChange={this.handleChangeValue.bind(this)}></Input>
+                                                </Col>
+                                            </Row>
+                                        </Col>
 
-                                    <Col span={4} offset={1}>
-                                        <Row>
-                                            <Col span={8}><span className="info-span">时间选择</span></Col>
-                                            <Col span={16}>
-                                                <MonthPicker size="large" defaultValue="2000-01"
-                                                    onChange={this.handleChangeValueTime.bind(this)} />
-                                            </Col>
-                                        </Row>
-                                    </Col>
+                                        <Col span={5} offset={1}>
+                                            <Row>
+                                                <Col span={8}><span className="info-span">时间选择</span></Col>
+                                                <Col span={16}>
+                                                    <MonthPicker size="large" defaultValue="2000-01"
+                                                        onChange={this.handleChangeValueTime.bind(this)} />
+                                                </Col>
+                                            </Row>
+                                        </Col>
 
-                                    <Col span={4} offset={1}>
-                                        <Button type="primary" size="large" onClick={this.handleAxiosHistoryDate.bind(this)}>查询</Button>
-                                    </Col>
-                                </Row>
+                                        <Col span={4} offset={1}>
+                                            <Button type="primary" size="large" onClick={this.handleAxiosHistoryDate.bind(this)}>查询</Button>
+                                        </Col>
+                                    </Row>
+                                </div>
                             </div>
 
                             <div className="historicalTrace-container-center">
                                 <div id="main" style={{ width: "100%", height: 400 }}></div>
                             </div>
 
-                            <div className="historicalTrace-container-bottom">
-                                <Table dataSource={this.state.historyData} columns={columns}></Table>
+                            <div className="historicalTrace-container-bottom container-box">
+                                <div className="container-title">
+                                    <span>历史变更明细追溯</span>
+                                </div>
+
+                                <div className="container-content">
+                                    <Table dataSource={this.state.historyData} columns={columns}></Table>                                
+                                </div>
                             </div>
                         </div>
 
-                    {/* </FreeScrollBar> */}
+                    </FreeScrollBar>
                 </div>
             </div>
         )

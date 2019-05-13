@@ -36,6 +36,7 @@ import {ReviewApi} from "../../../../Pages/wpdmp/dmp/ReviewApi/reviewApi";
 import {BlackListRevise} from "../../../../Pages/wpdmp/dmp/BlackListRevise/blackListRevise";
 
 //  pfpsmas-zcms
+import ZcmsIndex from "../../../../Pages/pfpsmas/zcms/rzc/zcmsIndex";
 import CreateChangeComparisonTable from "../../../../Pages/pfpsmas/zcms/rzc/createChangeComparisonTable";
 import InputChangeDetails from "../../../../Pages/pfpsmas/zcms/rzc/inputChangeDetails";
 import PreviewChangeDetails from "../../../../Pages/pfpsmas/zcms/rzc/previewChangeDetails";
@@ -49,6 +50,8 @@ import ApprovalDocumentManage from "../../../../Pages/pfpsmas/zcms/rzc/approvalD
 import ImportCivilzoningCode from "../../../../Pages/pfpsmas/zcms/rzc/importCivilzoningCode";
 import PreviewCivilzoningCode from "../../../../Pages/pfpsmas/zcms/rzc/previewCivilzoningCode";
 import HistoricalTrace from "../../../../Pages/pfpsmas/zcms/rzc/historicalTrace";
+import PreviewChangeReport from "../../../../Pages/pfpsmas/zcms/rzc/previewChangeReport";
+import CivilComparisonReport from "../../../../Pages/pfpsmas/zcms/rzc/civilComparisonReport";
 
 
 
@@ -78,6 +81,8 @@ export const Template = (props) => (
             <div className="ant-layout-content template-content">
                 <div>
                     <Router history={hashHistory}>
+                        
+                        {/* 权限 */}
                         <Route path='/about' exact component={UserInfo} />
                         <Route path='/about/sp/ua/approval' component={Approval} />
                         <Route path='/about/sp/ua/manage' component={Manage} />
@@ -95,6 +100,8 @@ export const Template = (props) => (
                         <Route path='/about/test' component={Test} />
                         <Route path='/about/test2' component={Test2} />
 
+                        {/* 区划 */}
+                        <Route path='/about/pfpsmas/zcms/zcmsIndex' component={ZcmsIndex} />
                         <Route path='/about/pfpsmas/zcms/createChangeComparisonTable' component={CreateChangeComparisonTable} />
                         <Route path='/about/pfpsmas/zcms/inputChangeDetails' component={InputChangeDetails} />
                         <Route path='/about/pfpsmas/zcms/previewChangeDetails' component={PreviewChangeDetails} />
@@ -108,7 +115,10 @@ export const Template = (props) => (
                         <Route path='/about/pfpsmas/zcms/importCivilzoningCode' component={ImportCivilzoningCode} />
                         <Route path='/about/pfpsmas/zcms/previewCivilzoningCode' component={PreviewCivilzoningCode} />
                         <Route path='/about/pfpsmas/zcms/historicalTrace' component={HistoricalTrace} />
+                        <Route path='/about/pfpsmas/zcms/previewChangeReport' component={PreviewChangeReport} />
+                        <Route path='/about/pfpsmas/zcms/civilComparisonReport' component={CivilComparisonReport} />
                         
+                        {/* 全员人口 */}
                         <Route path='/about/wpdmp/dmp/apilist' component={ApiList}/>
                         <Route path='/about/wpdmp/dmp/apilist/apiDetail' component={ApiDetail}/>
                         <Route path='/about/wpdmp/dmp/apilist/apiDetailChange' component={ApiDetailChange}/>
