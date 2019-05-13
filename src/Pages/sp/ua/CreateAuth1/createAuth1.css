@@ -1,0 +1,16 @@
+.Createtitle{
+    font-size: 20px;
+    color: #fff;
+    line-height: 55px;
+    margin: 0 auto;
+    width: 8%;
+}
+.form-create{
+    width: 85%;
+    margin: 0 auto;
+    padding-bottom: 15px;
+}
+.table-create{
+    width: 85%;
+    margin: 0 auto;
+}

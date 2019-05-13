@@ -1,0 +1,27 @@
+.auth-tree{
+    width: 85%;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.1);
+}
+.tree-title{
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    text-align: center;
+    font-size: 14px;
+    line-height: 50px;
+    color: #ffffff;
+    font-family: 宋体,sans-serif;
+    font-weight: bolder;
+}
+
+.assign :global(.ant-tree){
+    max-height: 375px;
+}
+
+.assign :global(.ant-tree li a){
+    color:#eee;
+}
+
+.assign :global(.ant-tree li a:hover) {
+    background-color: #1d5daa;
+}

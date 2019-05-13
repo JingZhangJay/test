@@ -1,0 +1,39 @@
+.userInfo .userInfo-content .login-form-tel-span {
+    height: 32px;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 1px solid #d9d9d9;
+    position: absolute;
+    right: 50px;
+}
+
+#codeNum{
+    color:#ffffff;
+    font-size: 14px;
+    margin-top: 2px;
+}
+.userInfo-title .word,.userInfo-title .line{
+    float: left;
+}
+
+.userInfo .long-step{
+    width:70%;
+    margin: 0 auto;
+    padding: 60px;
+}
+.userInfo .form-position{
+    width:50%;
+    margin: 0 auto;
+}
+
+.userInfo .long-step:global(.ant-steps .ant-steps-head){
+    background: none;
+}
+
+.userInfo .long-step:global(.ant-steps .ant-steps-title){
+    background:  url(../../../../asset/sp/ua/img/portal/cloth.jpg) repeat;
+}
+
+.userInfo .long-step:global(.ant-steps .ant-steps-item.ant-steps-status-process .ant-steps-title){
+    color: #ffffff;
+}

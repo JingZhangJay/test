@@ -1,0 +1,6 @@
+
+
+  .createChangeComparisonTable .container :global(table .ant-table-thead > tr > th),
+  .createChangeComparisonTable .container :global(table .ant-table-tbody > tr > td) {
+    text-align: center;
+  }

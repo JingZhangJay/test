@@ -1,0 +1,66 @@
+.register{
+    width: 100vw;
+    height: 100vh;
+    background: url('../../../asset/sp/ua/img/bg.png') no-repeat 0 0;
+    background-size: cover;
+    position: relative;
+}
+.register-container{
+    width: 30vw;
+    height: auto;
+    background: url('../../../asset/sp/ua/img/bg_layer.png') no-repeat 0 0;
+    background-size: cover;
+    padding: 20px;
+    padding-top: 50px;
+    position: absolute;
+    top: 45px;
+    right: 188px;
+}
+
+.register-container .register-logo{
+    width: 120px;
+    height: 32px;
+    background: url("../../../asset/sp/ua/img/register.png") no-repeat 0 0;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.register-form{
+    width: inherit;
+}
+
+.register-form form label{
+    color: #fff;
+}
+
+.ant-tree{
+    max-height: 400px;
+    overflow: auto;
+}
+
+/*//媒体查询*/
+@media(min-width:1200px) and (max-width:1400px){
+    .register-form :global(.has-error .ant-form-explain),
+    .register-form :global(.has-error .ant-form-split) {
+        color: #f50;
+        position: absolute;
+        top: -5px;
+        left: 263px;
+        width: 224px;
+    }
+
+    .register-form :global(.ant-form-explain),
+    .register-form :global(.ant-form-extra) {
+        color: #999;
+        position: absolute;
+        top: -5px;
+        left: 263px;
+        width: 224px;
+    }
+
+    .register-form :global(.ant-form-horizontal .ant-form-item) {
+        margin-bottom: 18px;
+    }
+}
+
+
