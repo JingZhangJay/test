@@ -1,0 +1,60 @@
+.lbefpira .fatherTitle {
+    width: 96%;
+    height: 30px;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 16px;
+    color: #fff;
+    padding-left: 10px;
+    border-bottom: 1px solid #468994;
+    line-height: 30px;
+}
+
+.lbefpira .fatherContent {
+    margin-top: 20px;
+}
+
+.lbefpira .motherTitle {
+    width: 96%;
+    height: 30px;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 16px;
+    color: #fff;
+    padding-left: 10px;
+    border-bottom: 1px solid #468994;
+    line-height: 30px;
+}
+
+.lbefpira .motherContent {
+    margin-top: 20px;
+}
+
+.lbefpira .childTitle {
+    width: 96%;
+    height: 30px;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 16px;
+    color: #fff;
+    padding-left: 10px;
+    border-bottom: 1px solid #468994;
+    line-height: 30px;
+}
+
+.lbefpira .childContent {
+    margin-top: 20px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+body .childContent :global(.ant-form .ant-col-8 label) {
+    color: #666;
+}
+
+body .lbefpira :global(.ant-form-item-control .ant-calendar-picker) {
+    margin-left: 0;
+    width: 100%;
+}

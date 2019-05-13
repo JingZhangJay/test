@@ -1,0 +1,7 @@
+body .rsira :global(.ant-tabs-extra-content .ant-tabs-new-tab) {
+    display: none;
+}
+
+body .rsira :global(.ant-tabs .ant-tabs-content) {
+    color: #fff;
+}

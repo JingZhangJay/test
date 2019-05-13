@@ -113,6 +113,17 @@ import AjfbEchaets from "./Pages/srbgs/fgimtpcim/data_statistics/CaseDistribute/
 import AjjaEchaets from "./Pages/srbgs/fgimtpcim/data_statistics/CloseCase/closeCase"; // 结案分布
 import BirthSexRatio from './Pages/srbgs/srbgr/birth_monitor/BirthSexRatio/birthSexRatio'; // 出生性别比
 
+//  pfpsmas-cbfsms
+//  pdass 三项制度 
+import Rsira from "./Pages/pfpsmas/cbfsms/pdass/Rsira/rsira";
+import Ssira from "./Pages/pfpsmas/cbfsms/pdass/Ssira/ssira";
+import Lbefpira from "./Pages/pfpsmas/cbfsms/pdass/Lbefpira/lbefpira";
+
+// 手动更改路由
+import Xxfssp from "./Pages/pfpsmas/cbfsms/pdass/xxfssp/Xxfssp";
+import Xxsp from "./Pages/pfpsmas/cbfsms/pdass/xxsp/Xxsp";
+import Nfhjthcx from "./Pages/pfpsmas/cbfsms/pdass/nfhjthcx/Nfhjthcx";
+
 
 //  引入axios
 //  并做全局配置
@@ -264,6 +275,16 @@ ReactDOM.render(
                 <Route path='/about/pfpsmas/cbfsms/srbgs/fgimtpcim/case_cooperation/case_receive' component={Jsajxb}/>
                 <Route path='/about/pfpsmas/cbfsms/srbgs/fgimtpcim/case_cooperation/cooperation_info' component={Xbxxck}/>
 
+                {/* 奖扶 */}
+                {/* pdass 三项制度 */}
+                <Route path='/about/pfpsmas/cbfsms/pdass/rsira' component={Rsira} />
+                <Route path='/about/pfpsmas/cbfsms/pdass/ssira' component={Ssira} />
+                <Route path='/about/pfpsmas/cbfsms/pdass/lbefpira' component={Lbefpira} />
+
+                {/* 手动更改路由 */}
+                <Route path='/about/pfpsmas/cbfsms/pdass/xxfssp' component={Xxfssp} />
+                <Route path='/about/pfpsmas/cbfsms/pdass/xxsp' component={Xxsp} />
+                <Route path='/about/pfpsmas/cbfsms/pdass/nfhjthcx' component={Nfhjthcx} />
             </Route>
 
             <Router path='/test' component={Test}/>
