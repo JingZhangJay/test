@@ -1,0 +1,460 @@
+import React from "react";
+import { hashHistory, Link } from "react-router";
+import { Form, Input, Row, Col, Button, DatePicker, Cascader, Select, Table, Modal, Card, Icon, Checkbox, message } from 'antd';
+import { SelectGroup,CaseInfo_Model } from "../../../../../Components/index"
+
+import {
+    getFindSonCodes,
+    getDetailInfo,
+    getProcessingResultQuery,
+    getCaseDetail,
+    getResultsExport
+} from "../../../../../Service/srbgs/fgimtpcim/server";
+import {
+    placeData,
+    selectZoningCode,
+    parseTime,
+    disabledDate,
+    detailShowModal
+} from "../../../../../asset/srbgs/js/common"
+
+const FormItem = Form.Item;
+const RangePicker = DatePicker.RangePicker;
+
+require("./cljgcx.css");
+
+const Option = Select.Option;
+
+const tableData = [
+    {
+        key: 1, caseId: 'A37070519030401', caseName: '湖口县付垅乡孕妇张彩霞进行了非医学需要的胎儿性别鉴定', caseNature: '北京市市辖区丰台区', register: '张彩霞', caseUnit: '罚款',
+        caseGrade: '罚款3000元', status: '北京市市辖区丰台区', caseTeamwork: '2015-08-06'
+    },
+    {
+        key: 2, caseId: 'A37070519030401', caseName: '湖口县付垅乡孕妇张彩霞进行了非医学需要的胎儿性别鉴定', caseNature: '北京市市辖区丰台区', register: '张彩霞', caseUnit: '罚款',
+        caseGrade: '款3000元', status: '北京市市辖区丰台区', caseTeamwork: '2015-08-06'
+    },
+    {
+        key: 3, caseId: 'A37070519030401', caseName: '湖口县付垅乡孕妇张彩霞进行了非医学需要的胎儿性别鉴定', caseNature: '北京市市辖区丰台区', register: '张彩霞', caseUnit: '罚款',
+        caseGrade: '罚款3000元', status: '北京市市辖区丰台区', caseTeamwork: '2015-08-06'
+    }
+];
+
+class Cljgcx extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false,
+            loading: false,
+            checkedBox: [],
+
+            checkedBoxData: [
+                {
+                label: "刑事处理",
+                sign: "params1",
+                children: [
+                    { checked: false, label: '判有期徒刑', value: '701' },
+                    { checked: false, label: '判有期徒刑缓刑', value: '702' },
+                    { checked: false, label: '管制', value: '703' },
+                    { checked: false, label: '拘役', value: '704' },
+                    { checked: false, label: '逮捕', value: '705' },
+                    { checked: false, label: '刑事拘留', value: '706' },
+                    { checked: false, label: '取保候审', value: '707' },
+                    { checked: false, label: '监视居住', value: '708' },
+                    { checked: false, label: '并处罚金', value: '709' },
+                    { checked: false, label: '拘役缓刑', value: '710' }]
+            }, {
+                label: "党纪处理",
+                sign: "params2",
+                children: [
+                    { checked: false, label: '警告', value: '717' },
+                    { checked: false, label: '严重警告', value: '718' },
+                    { checked: false, label: '撤销党内职务', value: '719' },
+                    { checked: false, label: '留党察看', value: '720' },
+                    { checked: false, label: '开出党籍', value: '721' }]
+            }, {
+                label: "政纪处理",
+                sign: "params3",
+                children: [
+                    { checked: false, label: '警告', value: '722' },
+                    { checked: false, label: '记过', value: '723' },
+                    { checked: false, label: '记大过', value: '724' },
+                    { checked: false, label: '降级', value: '725' },
+                    { checked: false, label: '撤销行政职务', value: '726' },
+                    { checked: false, label: '开除公职', value: '727' },
+                    { checked: false, label: '解除聘用合同', value: '728' }]
+            }, {
+                label: "行政处罚个人",
+                sign: "params4",
+                children: [
+                    { checked: false, label: '没收医疗器械', value: '770' },
+                    { checked: false, label: '没收B超', value: '771' },
+                    { checked: false, label: '没收非法所得', value: '772' },
+                    { checked: false, label: '没收药品', value: '773' },
+                    { checked: false, label: '罚款', value: '774' },
+                    { checked: false, label: '行政拘留', value: '775' },
+                    { checked: false, label: '吊销执行医师证书', value: '776' },
+                    { checked: false, label: '吊销乡村医师证书', value: '777' },
+                    { checked: false, label: '注销生育证', value: '778' },
+                    { checked: false, label: '不批准再生育', value: '779' },
+                    { checked: false, label: '解除劳动关系', value: '780' },
+                    { checked: false, label: '批评教育', value: '781' },
+                    { checked: false, label: '落实长效节育措施', value: '782' },
+                    { checked: false, label: '吊销助理医师证书', value: '783' },
+                    { checked: false, label: '吊销护士执业证书', value: '784' },
+                    { checked: false, label: '其他', value: '785' }]
+            }, {
+                label: "行政处罚单位",
+                sign: "params5",
+                children: [
+                    { checked: false, label: '没收医疗器械', value: '760' },
+                    { checked: false, label: '没收B超', value: '761' },
+                    { checked: false, label: '吊销机构执业许可证', value: '762' },
+                    { checked: false, label: '取缔医疗机构', value: '763' },
+                    { checked: false, label: '取消医疗科目', value: '764' },
+                    { checked: false, label: '罚款', value: '765' },
+                    { checked: false, label: '没收非法所得', value: '766' },
+                    { checked: false, label: '没收药品', value: '767' },
+                    { checked: false, label: '其他', value: '768' }]
+            }],
+
+            // zoningCode: "230100000000000",
+            // assigningCode: "2",
+
+            badwData: { 1: [], 2: [], 3: [] },
+            cldwData: { 1: [], 2: [], 3: [] },
+
+            badwDataObj: {},
+
+            cljgcxTabData:[],
+            inquiryLoading: false,
+            cljgcxTabLoading: false,
+            downAndUp: false,
+            pageSize: 5,//每页条数
+            pageNum: 1,//当前页码
+            totalRecord: "",
+            inquiryData: {},
+            detailData:{},
+        }
+    }
+
+    // 处理结果查询
+    async handelGetProcessingResultQuery(params){
+        let data = await getProcessingResultQuery(params);
+        if(data.code == '000000'){
+            this.setState({
+                cljgcxTabData:data.responseData.dataList,
+                totalRecord: data.responseData.totalRecord,
+                inquiryLoading: false,
+                cljgcxTabLoading: false,
+            })
+        }else{
+            message.error('请求数据失败！');
+            this.setState({
+                inquiryLoading: false,
+                cljgcxTabLoading: false,
+            })
+        }
+    }
+
+    // 查看案件详情 请求
+    async handleGetCaseDetail(params){
+        let data = await getCaseDetail(params);
+        if(data.code == '000000'){
+            this.setState({
+                detailData: data.responseData,
+                detailVisible: true,
+            });
+        }else{
+            message.error('数据获取失败')
+        }
+    }
+
+    //  单选
+    onChangeCheckbox(sign, e) {
+        const { checkedBoxData } = this.state;
+        checkedBoxData.forEach(item => {
+            if (item.sign == sign) {
+                item.children.forEach(item => { 
+                    if (item.value == e.target.value) {  
+                        item.checked = e.target.checked
+                    }
+                })
+            }
+        })
+
+        this.setState({
+            checkedBoxData: checkedBoxData
+        })
+
+    }
+
+    //  全选
+    checkedAll(sign, e) {
+        const { checkedBoxData } = this.state;
+
+        checkedBoxData.forEach(item => {
+            if (item.sign == sign) {
+                item.children.forEach(item => {
+                    item.checked = e.target.checked
+                })
+            }
+        })
+
+        this.setState({
+            checkedBoxData: checkedBoxData
+        })
+    }
+
+    //  处理结果查询
+    handleSubmit(e) {
+	console.log( this.state.checkedBoxData )
+        let data;
+        e.preventDefault();
+        this.props.form.validateFields((errors,values) => {
+            data = {
+		//type: ,
+                clsjStart: parseTime(values.clsjStart),
+                clsjEnd: parseTime(values.clsjEnd),
+                cldw: values.badw,
+                tbdw: values.tbdw == undefined ? '000000000000000' : values.tbdw ,
+            }
+
+        })
+        data.pageNum = this.state.pageNum;
+        data.pageSize = this.state.pageSize;
+        this.setState({
+            inquiryData:data,
+            inquiryLoading: true,
+            cljgcxTabLoading: true,
+        })
+        this.handelGetProcessingResultQuery(data)
+    }
+
+    // 导出
+    handleExport(e){
+        e.preventDefault();
+        this.props.form.validateFields((errors,values) => {
+            getResultsExport(
+                '?clsjStart=' +  parseTime(values.clsjStart),
+                '&clsjEnd=' +  parseTime(values.clsjEnd),
+                '&cldw=' +  values.cldw,
+                '&tbdw=' + values.tbdw == undefined ? '000000000000000' : values.tbdw
+            )
+        })
+    }
+
+    // 查看案件详情
+    detailShowModal (e){
+        detailShowModal(e, this, this.handleGetCaseDetail);
+    }
+
+    // 获取案件详情 的 取消 按钮
+    detailHandle(e) {
+        this.setState({
+            detailVisible:false,
+        })
+    }
+
+    // 区划下拉框的 Value
+    handleZoningCode(test,e){
+        for(var key in e) {
+            if (key == "xzqhOnly") {
+                this.props.form.setFieldsValue({
+                    "badw": e[key]
+                })
+            } else if (key == "xzqhAllSix") {
+                this.props.form.setFieldsValue({
+                    "tbdw": e[key]
+                })
+            }
+        }
+    }
+
+    // 收起 搜素框
+    downAndUpHandel(){
+        let {downAndUp} = this.state;
+        this.setState({
+            downAndUp: !downAndUp
+        })
+    }
+    render() {
+        const { getFieldProps } = this.props.form;
+        const { checkedBoxData} = this.state;
+
+        const columns = [
+            { title: '案件编号', dataIndex: 'ajbh', key: 'ajbh' },
+            { title: '案件名称', dataIndex: 'ajmc', key: 'ajmc',render: (text) => <a href="javascript:;"  onClick={ this.detailShowModal.bind(this)}>{text}</a> },
+            { title: '办案单位', dataIndex: 'tbdw_mc', key: 'tbdw_mc' },
+            { title: '涉案对象', dataIndex: 'sadxmc', key: 'sadxmc' },
+            { title: '处罚类型', dataIndex: 'clmc', key: 'clmc' },
+            { title: '处理结果备注', dataIndex: 'bzsm', key: 'bzsm' },
+            { title: '处理单位', dataIndex: 'cldw_mc', key: 'cldw_mc' },
+            { title: '处理时间', dataIndex: 'clsj', key: 'clsj' }
+        ];
+
+        const loopCheckBox = (data, sign) => data.map(item => {
+            return (
+                <Checkbox value={item.value} checked={item.checked} onChange={this.onChangeCheckbox.bind(this, sign)} style={{ marginTop: 5 }}>{item.label}</Checkbox>
+            )
+        })
+
+        const loopSelect = (data, sign) => Object.keys(data).map(key => {
+            if(sign == "cldw"){
+                return (
+                    <Col span={7} offset={1}>
+                        <Select defaultValue="" onSelect={this.handleFindSonCodes.bind(this)}>
+                            <Option value="">全部</Option>
+                            {loopOption(data[key])}
+                        </Select>
+                    </Col>
+                )
+            }else if(sign == "badw"){
+                return (
+                    <Col span={7} offset={1}>
+                        {
+                            this.state.badwDataObj[key] ?
+                            <Select value={this.state.badwDataObj[key]} onSelect={this.handleFindSonCodes.bind(this)} disabled={this.state.badwDataObj[key] ? true : false}>
+                                <Option value="">全部</Option>
+                                {loopOption(data[key])}
+                            </Select> :
+                            <Select defaultValue="" onSelect={this.handleFindSonCodes.bind(this, key)} disabled={this.state.badwDataObj[key] ? true : false}>
+                                <Option value="">全部</Option>
+                                {loopOption(data[key])}
+                            </Select>
+                        }
+                    </Col>
+                )
+            }
+
+        });
+
+        const loopOption = data => data.map(item => {
+            return (
+                <Option value={item.XZQH_DM}>{item.XZQH_MC}</Option>
+            )
+        })
+
+        const loopDom = data => data.map(item => {
+            return (
+                <Row style={{ marginTop: 10 }}>
+                    <Col span={3} offset={1}>
+                        <Row>
+                            <Col span={12} style={{ marginTop: 5 }}>{item.label}</Col>
+                            <Col span={12}>
+                                <Checkbox value="全选" onChange={this.checkedAll.bind(this, item.sign)} style={{ marginTop: 5 }}>全选</Checkbox>
+                            </Col>
+                        </Row>
+                    </Col>
+
+                    <Col span={20}>
+                        {loopCheckBox(item.children, item.sign)}
+                    </Col>
+                </Row>
+            )
+        })
+
+        const pagination = {
+            _this: this,
+            total: this.state.totalRecord,
+            pageSize: this.state.pageSize,
+            onChange(current) {
+                let postData = this._this.state.inquiryData;
+                postData.pageSize = this._this.state.pageSize;
+                postData.pageNum = current;
+                this._this.handelGetProcessingResultQuery(postData);
+                this._this.setState({
+                    cljgcxTabLoading: false,
+                })
+            },
+        };
+        return (
+            <div>
+
+                <div className="formBox">
+                    <div className="formTitle">
+                        处理结果查询
+                        <p className={`downAndUp ${this.state.downAndUp ? 'rotate' : ''}`} onClick={this.downAndUpHandel.bind(this)}></p>
+                    </div>
+                    <div style={{paddingTop:0}} className={`formConten ${this.state.downAndUp ? 'up' : ''}`}>
+
+                        <Form  horizontal className="ant-advanced-search-form">
+                            {loopDom(checkedBoxData)}
+
+                            <Row style={{ marginTop: 10 }}>
+                                <Col span={12}>
+                                    <FormItem
+                                        label="办案单位"
+                                        labelCol={{ span: 4 }}
+                                        wrapperCol={{ span: 18 }}>
+
+                                        {/* {loopSelect(badwData, "badw")} */}
+                                        <SelectGroup sign="xzqhOnly" {...getFieldProps('badw')} handleZoningCode={this.handleZoningCode.bind(this,'xzqhOnly')} ></SelectGroup>
+                                    </FormItem>
+                                </Col>
+
+                                <Col span={12}>
+                                    <FormItem
+                                        label="处理单位"
+                                        labelCol={{ span: 4 }}
+                                        wrapperCol={{ span: 18 }}>
+
+                                        {/* {loopSelect(cldwData, "cldw")} */}
+                                        <SelectGroup sign="xzqhAll" {...getFieldProps('tbdw')} handleZoningCode={this.handleZoningCode.bind(this,'xzqhAll')} ></SelectGroup>
+                                    </FormItem>
+                                </Col>
+
+                                <Col span={12}>
+                                    <FormItem
+                                        label="处理时间"
+                                        labelCol={{ span: 4 }}
+                                        wrapperCol={{ span: 19 }}>
+                                        <Col span="9">
+                                            <FormItem >
+                                                <DatePicker {...getFieldProps('clsjStart')} disabledDate={disabledDate}  />
+                                            </FormItem>
+                                        </Col>
+                                        <Col span="1">
+                                            <p className="ant-form-split">-</p>
+                                        </Col>
+                                        <Col span="9">
+                                            <FormItem>
+                                                <DatePicker {...getFieldProps('clsjEnd')} disabledDate={disabledDate} />
+                                            </FormItem>
+                                        </Col>
+                                    </FormItem>
+                                </Col>
+
+                            </Row>
+
+                            <Row>
+                                <Col span={12} offset={12} style={{ textAlign: 'right' }}>
+                                    <Button type="primary" htmlType="submit" onClick={this.handleSubmit.bind(this)} loading={this.state.inquiryLoading}>查询</Button>
+                                    <Button onClick={this.handleExport.bind(this)} >导出</Button>
+                                    <Button>定制</Button>
+                                </Col>
+                            </Row>
+
+                        </Form>
+                    </div>
+                </div>
+                <div className="queryResults">
+                    <Table columns={columns}
+                        dataSource={this.state.cljgcxTabData}
+                        className="table"
+                        loading = {this.state.cljgcxTabLoading}
+                        pagination={pagination}
+                    />
+                </div>
+
+                {/*  查看案件信息详情  */}
+                <CaseInfo_Model visible={this.state.detailVisible} data={this.state.detailData} detailShowModal={this.detailShowModal.bind(this)} detailHandle={this.detailHandle.bind(this)} />
+
+            </div>
+        )
+    }
+}
+
+Cljgcx = Form.create()(Cljgcx);
+
+export default Cljgcx

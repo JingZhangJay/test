@@ -1,0 +1,121 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/*a{*/
+    /*text-decoration:none;*/
+    /*color:#fff;*/
+/*}*/
+
+.text-center{
+    text-align: center;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.m-auto{
+    margin: auto;
+}
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+#app .main{
+    background: url("../img/bg.jpg") no-repeat 0px 0px;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+}
+
+.formBox>.formTitle{
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 1px solid #fff;
+    padding: 0px 20px;
+}
+
+.formBox>.formConten{
+    padding-top: 30px;
+}
+
+.formBox,
+.queryResults{
+    width: 98%;
+    margin: auto;
+    background: rgba(0,0,0,0.3);
+    padding: 8px 8px 20px 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    color:#fff;
+}
+
+.queryResults{
+    margin-top: 20px;
+}
+/* 向下 上 切换 fromConten 显示 隐藏*/
+.formBox>.formTitle>.downAndUp{
+    width: 16px;
+    height: 20px;
+    background: url("../img/down.png") no-repeat 0px 0px;
+    background-size: 100% 100%;
+    float: right;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.formBox>.formTitle>.downAndUp.rotate{
+    transform: rotateX(180deg);
+}
+
+.formBox>.formConten.up{
+    /* height: 0px; */
+    /* padding: 0px; */
+    /* transition:height 2s; */
+    /* -moz-transition:height 2s; Firefox 4 */
+    /* -webkit-transition:height 2s; Safari and Chrome */
+    /* -o-transition:height 2s; Opera */
+
+    display: none;
+}
+
+
+.queryResults .ant-table-thead>tr>th,
+.queryResults .ant-table tr>td {
+    color: #FFF;
+    font-size: 12px;
+    text-align: center;
+}
+
+.queryResults .ant-table-thead>tr>th{
+    background: rgba(0,0,0,0.4);
+}
+
+.queryResults .ant-table-tbody>tr.ant-table-row-hover td,
+.queryResults .ant-table-tbody>tr:hover td{
+    color:#000;
+}
+ 
+.ant-modal-content  .ant-advanced-search-form .ant-form-item-label label{
+    color: #666;
+}

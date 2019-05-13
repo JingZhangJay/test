@@ -1,0 +1,8 @@
+.formConten .ant-form-item,
+.formConten .ant-form-item-label label{
+    color:#fff;
+}
+
+.ant-cascader-picker-label{
+    color: #000;
+}

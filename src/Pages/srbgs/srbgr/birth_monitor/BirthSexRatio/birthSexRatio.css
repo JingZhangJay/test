@@ -1,0 +1,6 @@
+.BirthSexRatio :global(.csxbbTabs){
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    border-radius: 6px;
+    padding: 10px;
+}

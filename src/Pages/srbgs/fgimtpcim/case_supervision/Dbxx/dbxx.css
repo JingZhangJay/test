@@ -1,0 +1,21 @@
+.ExportLoadingBox{
+    text-align: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    background: rgba(55, 55, 55, 0.6);
+    z-index: 2;
+    padding: 40vh;
+}
+.ExportLoading>span.ant-spin-dot{
+    width: 6.25vw;
+    height: 6.25vw;
+
+}
+
+.ExportLoadingBox .ant-spin-text{
+    font-size: 20px;
+}

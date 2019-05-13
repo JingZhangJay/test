@@ -1,0 +1,3 @@
+.caseDistribute :global(.yearSelect>.ant-form-item-label label){
+    color: #fff;
+}

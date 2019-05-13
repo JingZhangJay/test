@@ -1,0 +1,5 @@
+ /* 结案报告 */
+.caseOverTable .ant-table-thead>tr>th,
+.caseOverTable .ant-table-tbody>tr>td{
+    text-align: center;
+}

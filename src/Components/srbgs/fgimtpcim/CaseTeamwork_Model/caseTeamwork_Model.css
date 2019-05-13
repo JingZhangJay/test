@@ -1,0 +1,5 @@
+/* 协办案件 */
+.teamworkTable .ant-table-thead>tr>th,
+.teamworkTable .ant-table-tbody>tr>td{
+    text-align: center;
+}

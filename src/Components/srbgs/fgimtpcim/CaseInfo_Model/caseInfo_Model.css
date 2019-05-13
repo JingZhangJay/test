@@ -1,0 +1,6 @@
+/* model 弹出框 案件信息查看*/
+
+.CaseInfo-table .ant-table-thead>tr>th,
+.CaseInfo-table .ant-table tr>td{
+    text-align: center;
+}

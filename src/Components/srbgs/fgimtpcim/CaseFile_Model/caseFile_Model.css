@@ -1,0 +1,22 @@
+/* 案件材料报告 */
+.caseFileModel a{
+    width:100%;
+    text-align: center;
+    display: inline-block;
+}
+.caseFileModel a>.icon{
+    font-size: 20px;
+}
+
+.caseFileModel .ant-row{
+    margin-bottom: 16px;
+}
+
+body .main :global(.ant-badge .ant-badge-count){
+    top: -10px;
+}
+
+/* 案件材料展示 */
+.caseFileShow.ant-modal .ant-modal-body{
+    padding: 2% 6%;
+}

@@ -1,0 +1,357 @@
+import React from 'react';
+import { Form, Input, Row, Col, Button, DatePicker,Cascader,Select,Table, Modal, Card,Icon, message} from 'antd';
+import {getCaseDetail, getObjectQuery,getObjectUnitExport} from "../../../../../Service/srbgs/fgimtpcim/server";
+import { CaseInfo_Model,CaseCustomized_Model,SelectGroup } from "../../../../../Components";
+
+const FormItem = Form.Item;
+const Option = Select.Option;
+require('./sadwcx.css');
+
+class Sadxcx extends  React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            sadwcTableLoading:false,
+            inquiryLoading:false,
+            detailVisible:false ,
+            customizedVisible:false,
+            data:{},
+            downAndUp: false,
+            pageSize: 5,//每页条数
+            pageNum: 1,//当前页码
+            totalRecord: "",
+            inquiryData: {},
+        }
+    }
+
+    // 涉案对象列表查询 请求
+    async handleGetObjectQuery(parent){
+        let data = await getObjectQuery(parent);
+        if(data.code == '000000'){
+            this.setState({
+                sadwcxlistTable:data.responseData.dataList,
+                totalRecord: data.responseData.totalRecord,
+                sadwcTableLoading:false,
+                inquiryLoading:false
+            })
+        }else{
+            message.error('数据请求失败！');
+            thi.setState({
+                sadwcTableLoading:false,
+                inquiryLoading:false
+            })
+        }
+      
+    }
+
+    // // 涉案对象列表导出 请求
+    // async handleGetObjectUnitExport(parent) {
+    //     let data = await getObjectUnitExport(parent);
+    //     console.log(data)
+    // }
+
+    // 查看案件详情 请求
+    async handleGetCaseDetail(params){
+        let data = await getCaseDetail(params);
+        if(data.code == '000000'){
+            this.setState({
+                data: data.responseData,
+                detailVisible: true,
+            });
+        }else{
+            message.error('数据请求失败！')
+        }
+       
+    }
+
+    // 查询 和 导出
+    handle(callback,e) {
+        event.returnValue = false;
+        let data;
+        this.props.form.validateFields((errors,values) => {
+            data = {
+                dwmc:(values.dwmc == undefined ? '': values.dwmc),
+                frdb:  (values.frdb == undefined ? '': values.frdb),
+                dwxz: (values.dwxz == undefined ? '': values.dwxz),
+                zjhm: (values.zjhm == undefined ? '': values.zjhm),
+                dwlx:(values.dwlx == undefined ? '': values.dwlx),
+                sadxsf: (values.sadxsf == undefined ? '': values.sadxsf),
+                saxz: (values.saxz == undefined ? '': values.saxz),
+                gld: (values.gld == undefined ? '': values.gld),
+            };
+        })
+
+        if(callback == 'handleSubmit'){
+            data.pageNum = this.state.pageNum;
+            data.pageSize = this.state.pageSize;
+            this.setState({
+                inquiryData:data,
+                inquiryLoading:true,
+                sadwcTableLoading:true,
+            })
+            this.handleGetObjectQuery(data);
+        }else if(callback == 'handleExport'){
+            getObjectUnitExport(
+                '?dwmc=' + data.dwmc +
+                '&frdb=' + data.frdb +
+                '&dwxz=' + data.dwxz +
+                '&zjhm=' + data.zjhm +
+                '&dwlx=' + data.dwlx +
+                '&sadxsf=' + data.sadxsf +
+                '&saxz=' + data.saxz +
+                '&gld=' + data.gld
+            )
+        }
+    }
+
+    // 查看案件详情
+    detailShowModal (e){
+        e.preventDefault();
+        let params = e.currentTarget.parentNode.parentNode.childNodes[4].innerText;
+        this.handleGetCaseDetail(params)
+    }
+
+    // 获取案件详情 的 取消 按钮
+    detailHandle(e) {
+        this.setState({
+            detailVisible:false,
+        })
+    }
+
+    // 定制
+    customized(){
+        this.setState({
+            CaseCustomizedVisible:true
+        })
+    }
+
+    // 定制 的 取消 按钮
+    customizedHandle(e) {
+        this.setState({
+            CaseCustomizedVisible:false,
+        })
+    }
+
+    // 区划下拉框的 Value
+    handleZoningCode(test,e){
+        console.log(test, e);
+        for(var key in e) {
+            if (key == "xzqhOnly") {
+                this.props.form.setFieldsValue({
+                    "badw": e[key]
+                })
+            } else if (key == "xzqhAllSix") {
+                this.props.form.setFieldsValue({
+                    "gld": e[key]
+                })
+            }
+        }
+    }
+
+    // 收起 搜素框
+    downAndUpHandel(){ 
+        let {downAndUp} = this.state; 
+        this.setState({
+            downAndUp: !downAndUp
+        })
+    }
+    render (){
+        const { getFieldProps } = this.props.form;
+        const columns = [
+            { title: '证件号码', dataIndex: 'zjhm', key: 'zjhm' },
+            { title: '单位名称', dataIndex: 'sadwmc', key: 'sadwmc'},
+            { title: '管理地', dataIndex: 'gld_mc', key: 'gld_mc' },
+            { title: '法人代表', dataIndex: 'frdb', key: 'frdb' },
+            { title: '案件编号', dataIndex: 'ajbh', key: 'ajbh' },
+            { title: '案件名称', dataIndex: 'ajmc', key: 'ajmc',render: (text) => <a href="javascript:;" onClick={this.detailShowModal.bind(this)}>{text}</a>},
+            { title: '办案单位', dataIndex: 'badw', key: 'badw' },
+            { title: '涉案身份', dataIndex: 'sasf_mc', key: 'sasf_mc'},
+            { title: '涉案性质', dataIndex: 'saxz_mc', key: 'saxz_mc'},
+            { title: '添加时间', dataIndex: 'lrsj', key: 'lrsj'},
+        ];
+        const pagination = {
+            _this: this,
+            total: this.state.totalRecord,
+            pageSize: this.state.pageSize,
+            onChange(current) {
+                let postData = this._this.state.inquiryData;
+                postData.pageSize = this._this.state.pageSize;
+                postData.pageNum = current;
+                this._this.handleGetObjectQuery(postData);
+                this._this.setState({
+                    sadwcTableLoading: false,
+                })
+            },
+        };
+
+        return(
+            <div>
+                <div className="formBox">
+                    <div className="formTitle">
+                        涉案单位查询
+                        <p className={`downAndUp ${this.state.downAndUp ? 'rotate' : ''}`} onClick={this.downAndUpHandel.bind(this)}></p>
+                    </div>
+                    <div className={`formConten ${this.state.downAndUp ? 'up' : ''}`}>
+                        <Form horizontal className="ant-advanced-search-form">
+                            <Row gutter={16}>
+                                <Col sm={8}>
+                                    <FormItem
+                                        label="单位名称"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                        <Input placeholder="请输入搜索名称" size="default"  {...getFieldProps('dwmc')} />
+                                    </FormItem>
+                                    <FormItem
+                                        label="组织机构代码"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                        help
+                                    >
+                                        <Input  placeholder="请输入组织机构代码"  size="default" {...getFieldProps('zjhm')}/>
+                                    </FormItem>
+                                </Col>
+                                <Col sm={8}>
+                                    <FormItem
+                                        label="法人代表"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                     <Input placeholder="请输入法人名称"  size="default" {...getFieldProps('frdb')} />
+                                    </FormItem>
+                                    <FormItem
+                                        label="涉案性质"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                        <Select {...getFieldProps('saxz')} size="default">
+                                            <Option value="">全部</Option>
+                                            <Option value="570">非医学需要鉴定胎儿性别</Option>
+                                            <Option value="571">非法终止妊娠</Option>
+                                            <Option value="572">“两非”中介</Option>
+                                            <Option value="574">出售相关药品</Option>
+                                            <Option value="575">溺弃女婴</Option>
+                                            <Option value="576">其他</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col sm={8}>  
+                                    <FormItem
+                                        label="涉案对象身份"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                        <Select  {...getFieldProps('sadxsf')}  size="default">
+                                            <Option value="">全部</Option>
+                                            <Option value="583">育龄群众</Option>
+                                            <Option value="584">公办医疗机构</Option>
+                                            <Option value="585">民办医疗机构</Option>
+                                            <Option value="586">妇幼保健机构（含计生服务机构）</Option>
+                                            <Option value="587">公办医疗机构医务人员</Option>
+                                            <Option value="588">民办医疗机构医务人员</Option>
+                                            <Option value="589">计生服务机构医务人员</Option>
+                                            <Option value="590">游医</Option>
+                                            <Option value="591">出售相关药品药店</Option>
+                                            <Option value="592">其他</Option>
+                                        </Select>
+                                    </FormItem>
+                                    <FormItem
+                                        label="单位类型"
+                                        labelCol={{ span: 8 }}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                        <Select  {...getFieldProps('dwlx')}  size="default">
+                                            <Option value="">全部</Option>
+                                            <Option value="65">计划生育技术服务机构（不可选）</Option>
+                                            <Option value="66">国家级计划生育技术服务机构</Option>
+                                            <Option value="67">省级计划生育技术服务机构</Option>
+                                            <Option value="68">地级计划生育技术服务机构</Option>
+                                            <Option value="69">县级计划生育技术服务机构</Option>
+                                            <Option value="70">乡级计划生育技术服务机构</Option>
+                                            <Option value="71">村级计划生育技术服务机构</Option>
+                                            <Option value="72">其他计划生育技术服务机构</Option>
+                                            <Option value="73">医院（不可选）</Option>
+                                            <Option value="74">综合医院</Option>
+                                            <Option value="75">专科医院</Option>
+                                            <Option value="76">妇产（科）医院</Option>
+                                            <Option value="77">社区卫生服务中心（不可选）</Option>
+                                            <Option value="78">社区卫生服务中心</Option>
+                                            <Option value="79">社区卫生服务站</Option>
+                                            <Option value="80">卫生院（不可选）</Option>
+                                            <Option value="81">街道卫生院</Option>
+                                            <Option value="82">乡镇卫生院</Option>
+                                            <Option value="83">妇幼保健院（不可选）</Option>
+                                            <Option value="84">妇幼保健院</Option>
+                                            <Option value="85">妇幼保健所</Option>
+                                            <Option value="86">妇幼保健站</Option>
+                                            <Option value="87">生殖保健中心</Option>
+                                            <Option value="88">其他服务机构类型</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col sm={6}>
+                                    <FormItem
+                                        label="单位性质"
+                                        labelCol={{ span: 8}}
+                                        wrapperCol={{ span: 16 }}
+                                        hasFeedback
+                                    >
+                                        <Select {...getFieldProps('dwxz')} size="default">
+                                            <Option value="">全部</Option>
+                                            <Option value="53">国营单位</Option>
+                                            <Option value="54">民营单位</Option>
+                                            <Option value="55">个体工商户</Option>
+                                            <Option value="57">其他</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col sm={18}>
+                                    <FormItem
+                                        label="管理地"
+                                        labelCol={{ span: 2}}
+                                        wrapperCol={{ span: 22 }}
+                                    >
+                                        <SelectGroup sign="xzqhAllSix" offset='1' {...getFieldProps('gld')} handleZoningCode={this.handleZoningCode.bind(this,'xzqhAllSix')} ></SelectGroup>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12} offset={12} style={{ textAlign: 'right' }}>
+                                    <Button type="primary" htmlType="submit"  onClick={this.handle.bind(this,'handleSubmit')} loading={this.state.inquiryLoading}>查询</Button>
+                                    <Button onClick={this.handle.bind(this,'handleExport')} >导出</Button>
+                                    <Button onClick={this.customized.bind(this)}>定制</Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </div>
+                </div>
+                <div className="queryResults">
+                    <Table columns={columns}
+                           dataSource={this.state.sadwcxlistTable}
+                           className="table"
+                           loading={this.state.sadwcTableLoading}
+                           pagination={pagination} />
+                </div>
+
+                {/*  查看案件信息详情 */}
+                <CaseInfo_Model visible={this.state.detailVisible} data={this.state.data} detailShowModal={this.detailShowModal.bind(this)} detailHandle={this.detailHandle.bind(this)} />
+
+                {/* 报表定制*/}
+                <CaseCustomized_Model  visible={this.state.CaseCustomizedVisible} detailHandle={this.customizedHandle.bind(this)}/>
+
+            </div>
+        )
+    }
+}
+
+Sadxcx = Form.create()(Sadxcx);
+
+export default  Sadxcx
